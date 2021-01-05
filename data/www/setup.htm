@@ -1,0 +1,260 @@
+<html>
+
+<head>
+    <title>%esp_name%</title>
+    <link href='css/main.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body onload="SetFields()">
+    <h1>%esp_name% settings</h1>
+    <form name="setup" method="get" action="savesettings">
+        <table>
+            <col width="200">
+            <col width="200">
+            <tr>
+                <td>WebLog Display Level</td>
+                <td>
+                    <select id="webloglevel" name="webloglevel">
+                        <option value="0">none</option>
+                        <option value="1">Error</option>
+                        <option value="2">Warning</option>
+                        <option value="3">Info</option>
+                        <option value="4">Debug</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>ESP Board</td>
+                <td>
+                    <select id="esp_board" name="esp_board" onchange="ChangeBoard()">
+                        <option value="none">none</option>
+                        <option value="AI_THINKER">AI_THINKER</option>
+                        <option value="ESP_EYE">ESP_EYE</option>
+                        <script language="javascript" type="text/javascript">
+                        //##############################################################
+                        // Commented as they aren't tested yet.
+                        // Let us know when you have tested and working.
+                        //<option value="M5STACK_PSRAM">M5STACK_PSRAM</option>
+                        //<option value="M5STACK_WIDE">M5STACK_WIDE</option>
+                        //<option value="WROVER_KIT">WROVER_KIT</option>
+                        //##############################################################
+                        </script>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>ESP name:</td>
+                <td><input name="esp_name" maxlength="19" size="19" value="%esp_name%"></td>
+            </tr>
+            <tr>
+                <td>Web Userid:</td>
+                <td><input name="esp_uname" maxlength="9" size="9" value="%esp_uname%"></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input name="esp_pass" maxlength="19" size="19" value="%esp_pass%"></td>
+            </tr>
+            <tr>
+                <td>FlashCount:</td>
+                <td><input name="Flashcount" maxlength="5" size="5" value="%Flashcount%"></td>
+            </tr>
+            <tr>
+                <td>Flashduration:</td>
+                <td><input name="Flashduration" maxlength="5" size="5" value="%Flashduration%"> msec</td>
+            </tr>
+            <tr>
+                <td>Camera Rotation:</td>
+                <td>
+                    <select id="Rotation" name="Rotation">
+                        <option value="0">none</option>
+                        <option value="90">90</option>
+                        <option value="180">180</option>
+                        <option value="270">270</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Network</td>
+                <td>
+                    <select id="IPsetting" name="IPsetting" onchange="ChangeIP()">
+                        <option value="DHCP">DHCP</option>
+                        <option value="Fixed">Fixed</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="IPaddr">
+                <td>IP Address:</td>
+                <td><input name="IPaddr" maxlength="15" size="15" value="%IPaddr%"></td>
+            </tr>
+            <tr id="SubNetMask">
+                <td>Subnetmask:</td>
+                <td><input name="SubNetMask" maxlength="4" size="15" value="%SubNetMask%"></td>
+            </tr>
+            <tr id="GatewayAddr">
+                <td>Gateway Addr:</td>
+                <td><input name="GatewayAddr" maxlength="15" size="15" value="%GatewayAddr%"></td>
+            </tr>
+            <tr>
+                <td>Send Protocol</td>
+                <td>
+                    <select id="Send_Protocol" name="Send_Protocol" onchange="ChangeProtocol()">
+                        <option value="none">none</option>
+                        <option value="json">json</option>
+                        <option value="mqtt">mqtt</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="server1">
+                <td>Server IP:</td>
+                <td><input name="ServerIP" maxlength="15" size="15" value="%ServerIP%"></td>
+            </tr>
+            <tr id="server2">
+                <td>Server Port:</td>
+                <td><input name="ServerPort" maxlength="4" size="4" value="%ServerPort%"></td>
+            </tr>
+            <tr id="server3">
+                <td>Server Userid:</td>
+                <td><input name="ServerUser" maxlength="15" size="15" value="%ServerUser%"></td>
+            </tr>
+            <tr id="server4">
+                <td>Server Password:</td>
+                <td><input name="ServerPass" maxlength="15" size="15" value="%ServerPass%"></td>
+            </tr>
+            <tr id="server5">
+                <td>Domoticz IDX:</td>
+                <td><input name="DomoticzIDX" maxlength="4" size="4" value="%DomoticzIDX%"></td>
+            </tr>
+            <tr id="mqtt1">
+                <td>MQTT subscriber:</td>
+                <td><input name="MQTTsubscriber" maxlength="20" size="20" value="%MQTTsubscriber%"></td>
+            </tr>
+            <tr id="mqtt2">
+                <td>MQTT TopicIn:</td>
+                <td><input name="MQTTtopicin" maxlength="20" size="20" value="%MQTTtopicin%"></td>
+            </tr>
+            <tr>
+                <td colspan=2 id="message">
+                </td>
+            </tr>
+            <tr>
+                <td colspan=2>
+                    <input type="submit" value="Save">&nbsp;&nbsp;
+                    <input type="button" style="font-size:14px; height:24px; width:90px"
+                        onClick="window.location.href='/configdump';" value="backup conf" />&nbsp;&nbsp;
+                    <input type="button" style="font-size:14px; height:24px; width:90px"
+                        onClick="window.location.href='/configupdrequest';" value="load config" />&nbsp;&nbsp;
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
+
+<script language="javascript" type="text/javascript">
+    var webloglevel = "%webloglevel%";
+    var esp_board = "%esp_board%";
+    var IPsetting = "%IPsetting%";
+    var SendProtocol = "%SendProtocol%";
+    var Rotation = "%Rotation%";
+
+    function ChangeIP() {
+        IPsetting = document.getElementById('IPsetting').value;
+        SetFields();
+    }
+
+    function ChangeBoard() {
+        esp_board = document.getElementById('esp_board').value;
+        SetFields();
+    }
+    function ChangeProtocol() {
+        SendProtocol = document.getElementById('Send_Protocol').value;
+        SetFields();
+    }
+
+    function SetFields() {
+        document.getElementById("message").innerHTML = "";
+
+        if (webloglevel == "0")
+            document.getElementById('webloglevel').getElementsByTagName('option')[0].selected = 'selected';
+        else if (webloglevel == "1")
+            document.getElementById('webloglevel').getElementsByTagName('option')[1].selected = 'selected';
+        else if (webloglevel == "2")
+            document.getElementById('webloglevel').getElementsByTagName('option')[2].selected = 'selected';
+        else if (webloglevel == "3")
+            document.getElementById('webloglevel').getElementsByTagName('option')[3].selected = 'selected';
+        else
+            document.getElementById('webloglevel').getElementsByTagName('option')[4].selected = 'selected';
+
+        if (esp_board == "AI_THINKER")
+            document.getElementById('esp_board').getElementsByTagName('option')[1].selected = 'selected';
+        else if (esp_board == "ESP_EYE")
+            document.getElementById('esp_board').getElementsByTagName('option')[2].selected = 'selected';
+        else if (esp_board == "M5STACK_PSRAM")
+            document.getElementById('esp_board').getElementsByTagName('option')[3].selected = 'selected';
+        else if (esp_board == "M5STACK_WIDE")
+            document.getElementById('esp_board').getElementsByTagName('option')[4].selected = 'selected';
+        else if (esp_board == "WROVER_KIT")
+            document.getElementById('esp_board').getElementsByTagName('option')[5].selected = 'selected';
+        else {
+            document.getElementById('esp_board').getElementsByTagName('option')[0].selected = 'selected';
+            document.getElementById("message").innerHTML = "<span style='color:red'><b> *** Select Esp-board Camera! ***</b></span>";
+        }
+
+
+        if (Rotation == "90")
+            document.getElementById('Rotation').getElementsByTagName('option')[1].selected = 'selected';
+        else if (Rotation == "180")
+            document.getElementById('Rotation').getElementsByTagName('option')[2].selected = 'selected';
+        else if (Rotation == "270")
+            document.getElementById('Rotation').getElementsByTagName('option')[3].selected = 'selected';
+        else
+            document.getElementById('Rotation').getElementsByTagName('option')[0].selected = 'selected';
+
+        if (IPsetting == "Fixed") {
+            document.getElementById('IPsetting').getElementsByTagName('option')[1].selected = 'selected';
+            document.getElementById('IPaddr').style.display = '';
+            document.getElementById('SubNetMask').style.display = '';
+            document.getElementById('GatewayAddr').style.display = '';
+        }
+        else {
+            document.getElementById('IPsetting').getElementsByTagName('option')[0].selected = 'selected';
+            document.getElementById('IPaddr').style.display = 'none';
+            document.getElementById('SubNetMask').style.display = 'none';
+            document.getElementById('GatewayAddr').style.display = 'none';
+        }
+
+        if (SendProtocol == "none") {
+            document.getElementById('Send_Protocol').getElementsByTagName('option')[0].selected = 'selected';
+            document.getElementById('server1').style.display = 'none';
+            document.getElementById('server2').style.display = 'none';
+            document.getElementById('server3').style.display = 'none';
+            document.getElementById('server4').style.display = 'none';
+            document.getElementById('server5').style.display = 'none';
+            document.getElementById('mqtt1').style.display = 'none';
+            document.getElementById('mqtt2').style.display = 'none';
+        }
+        else if (SendProtocol == "json") {
+            document.getElementById('Send_Protocol').getElementsByTagName('option')[1].selected = 'selected';
+            document.getElementById('server1').style.display = '';
+            document.getElementById('server2').style.display = '';
+            document.forms['setup']['ServerPort'].value = '8080';
+            document.getElementById('server3').style.display = '';
+            document.getElementById('server4').style.display = '';
+            document.getElementById('server5').style.display = '';
+            document.getElementById('mqtt1').style.display = 'none';
+            document.getElementById('mqtt2').style.display = 'none';
+        }
+        else if (SendProtocol == "mqtt") {
+            document.getElementById('Send_Protocol').getElementsByTagName('option')[2].selected = 'selected';
+            document.getElementById('server1').style.display = '';
+            document.getElementById('server2').style.display = '';
+            document.forms['setup']['ServerPort'].value = '1883';
+            document.getElementById('server3').style.display = '';
+            document.getElementById('server4').style.display = '';
+            document.getElementById('server5').style.display = '';
+            document.getElementById('mqtt1').style.display = '';
+            document.getElementById('mqtt2').style.display = '';
+        }
+    }
+</script>

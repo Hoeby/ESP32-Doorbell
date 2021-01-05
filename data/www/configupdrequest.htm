@@ -1,0 +1,72 @@
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+
+<html>
+
+<head>
+    <title>%esp_name%</title>
+    <link href='css/main.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <h1>%esp_name% load files or bin to ESP.</h1>
+    Upload options:<ul>
+        <li><b>firmware.bin</b> (*1)</li>
+        <li><b>spiffs.bin</b> (*1)</li>
+        <li><b>ESP_CAM_CONFIG.json</b> (*1)</li>
+        <li><b>ESP_CAM_SETTINGS.json</b></li>
+        <li><b>*.htm;*.css;*.js</b> (*2)</li>
+    </ul>
+    (*1): Only select a single file and ESP will reboot after upload is completed.<br>
+    (*2): Allows for multiple files to be selected and uploaded.<br><br>
+    <form action="/ConfigFileUploads" method="post" enctype="multipart/form-data">
+        <input type="file" name="myfile" multiple>
+        <input type="submit" value="Upload File to Server">
+    </form>
+
+    <div class="progress" id="progress" style="margin-left:5px; width:400px; height: 0px;border:0p">
+        <div class="bar" style="width:0px; height:5px; background-color: blue;"></div>
+    </div>
+    <div class="percent" style="margin-left:5px;"></div>
+    <div id="status" style="margin-left:5px; margin-top:5px;"></div>
+</body>
+
+</html>
+
+<script>
+    (function () {
+
+        var bar = $('.bar');
+        var percent = $('.percent');
+        var status = $('#status');
+
+
+        $('form').ajaxForm({
+            beforeSend: function () {
+                status.empty();
+                document.getElementById("progress").style.height = "5";
+                document.getElementById("progress").style.border = "1px solid black";
+                var percentVal = '0%%';
+                bar.width(percentVal);
+                percent.html(percentVal);
+                $('button[type=submit], input[type=submit]').prop('disabled', true);
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%%';
+                bar.width(percentVal);
+                percent.html('progress:' + percentVal);
+            },
+            success: function () {
+                document.getElementById("progress").style.border = "none";
+                document.getElementById("progress").style.height = "0";
+                bar.width(0);
+                percent.html('Upload completed.');
+                $('button[type=submit], input[type=submit]').prop('disabled', false);
+            },
+            complete: function (xhr) {
+                status.html("<h2>" + xhr.responseText + "</h2>");
+            }
+        });
+
+    })();       
+</script>

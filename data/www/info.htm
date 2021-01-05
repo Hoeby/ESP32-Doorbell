@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <title>%esp_name%</title>
+    <link href='css/main.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <h2 id="color">Camera state: ????</h2>
+    <h2>ESP info</h2>
+    <ul>
+        <li>VersionBuild: %VERSION%</li>
+        <li>WiFi SSID: %wifi_ssid% &nbsp;&nbsp;&nbsp; RSSI: %wifi_rssi%</li>
+        <li>Ip: %ipaddr% / %ipnetm% / %ipgate%</li>
+        <li>CAM: %esp_board% / button-gpio=%BUTTON_GPIO_NUM% / Led gpio=%BUTTONLED_GPIO_NUM%</li>
+        <li>Spiffs: %SPIFFS_tot%-%SPIFFS_used%=%SPIFFS_free%kB free</li>
+        <li>Server: %SendProtocol% / %ServerIP% / %ServerPort%</li>
+    </ul>
+
+    <h3 class="inline">ESP Logging</h3>
+    <button class="inline" type="button" onclick=" window.open('/logdump','_blank');">DumpLog</button>
+    <button class="inline" type="button" onclick="window.location.href='/logclean';">CleanLog</button>
+    <h3 class="inline"></h3>
+
+    <div id="Console" class="scrollable">
+        <p id="consoleLog"></p>
+    </div>
+
+</html>
+</body>
+
+<script type="text/javascript">
+    var webSocket = null;
+    wsStart();
+    CamStateColour();
+
+    function wsStop() {
+        webSocket.close();
+    }
+
+    function wsStart() {
+        var webSocketURL = "ws://" + location.hostname + "/ws";
+        console.log("openWSConnection::Connecting to: " + webSocketURL);
+        try {
+            webSocket = new WebSocket(webSocketURL);
+            webSocket.onopen = function (openEvent) {
+                console.log("WebSocket OPEN: " + JSON.stringify(openEvent, null, 4));
+            };
+            webSocket.onclose = function (closeEvent) {
+                console.log("WebSocket CLOSE: " + JSON.stringify(closeEvent, null, 4));
+            };
+            webSocket.onerror = function (errorEvent) {
+                console.log("WebSocket ERROR: " + JSON.stringify(errorEvent, null, 4));
+            };
+            webSocket.onmessage = function (messageEvent) {
+                var message = messageEvent.data;
+                var color = "";
+                if (message.includes("[E]"))
+                    color = "red";
+                else if (message.includes("[W]"))
+                    color = "orange";
+                else if (message.includes("[I]"))
+                    color = "";
+                else if (message.includes("[D]"))
+                    color = "blue";
+
+                var paragraph = document.getElementById("consoleLog");
+                var text = message.replace("\n", "")
+                var newLine = document.createTextNode(text);
+                if (color != "") {
+                    var container = document.createElement("span");
+                    container.appendChild(newLine);
+                    container.style.color = color;
+                    paragraph.appendChild(container);
+                } else {
+                    paragraph.appendChild(newLine);
+                }
+                if (message.endsWith("\n"))
+                    paragraph.appendChild(document.createElement("br"));
+
+                paragraph.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                webSocket.send("ok");
+            };
+        } catch (exception) {
+            console.error(exception);
+        }
+    }
+
+    function CamStateColour() {
+        var str = document.getElementById("color").innerHTML;
+        var cst = "%CamStatus%";
+        if (cst.includes("working")) {
+            var res = str.replace("????", "<span style='color:green'>working</span>");
+        } else {
+            var res = str.replace("????", "<span style='color:red'>%CamStatus%</span>");
+        }
+        document.getElementById("color").innerHTML = res;
+    }
+
+    window.onbeforeunload = function () {
+        webSocket.onclose = function () { }; // disable onclose handler first
+        webSocket.close();
+    };
+</script>

@@ -1,0 +1,122 @@
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<html>
+
+<head>
+    <title>%esp_name%</title>
+    <link href='css/main.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <hr class="hrline">
+    <div class="box"></div>
+    <p><img src='src/logo.jpg' alt='doorbell' /></p>
+    <hr class="hrline">
+    <h1 class="title">%esp_name% (%VERSION_MAJOR%)</h1>
+    <div style="margin-left:10px; margin-top:5px; width: 98%%;">
+        <table style="width: 100%%; height: 77%%;">
+            <tr>
+                <td style="width:180px; vertical-align: top;">
+                    <table>
+                        <tr>
+                            <td><button type="button"
+                                    onclick="document.getElementById('indexframe').setAttribute('src', '/info')">ESP
+                                    Info</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" onclick="frameLoad('/capture')">Get JPG Snapshot</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" onclick="frameLoad('/stream')">Stream JPG</button></td>
+                        </tr>
+                    </table>
+                    <h2>Config</h2>
+                    <table>
+                        <tr>
+                            <td><button type="button"
+                                    onclick="document.getElementById('indexframe').setAttribute('src', '/setup')">ESP
+                                    Settings</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button"
+                                    onclick="document.getElementById('indexframe').setAttribute('src', '/camsetup')">Camera
+                                    settings</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button"
+                                    onclick="document.getElementById('indexframe').setAttribute('src', '/configupdrequest')">Load
+                                    new File</button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button"
+                                    onclick="document.getElementById('indexframe').setAttribute('src', '/wiki')">Wiki
+                                    </button></td>
+                        </tr>
+                        <tr>
+                            <td><button type="button" onclick="window.location.href='/logout';">Logout</button></li>
+                        </tr>
+                        <tr>
+                            <td><br><button type="button" onclick="window.location.href='/reboot';">Reboot</button></li>
+                        </tr>
+                        <tr>
+                            <td><button type="button" onclick="window.location.href='/wificlear';">Clear wifi</button></td>    
+                        </tr>
+                    </table>
+                </td>
+                <td style="vertical-align: top;">
+                    <iframe class="iframe" id="indexframe" src="/info" ></iframe>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</html>
+</body>
+<script>
+    function frameLoad(Page) {
+        var iframe = document.getElementById('indexframe');
+        // remove current <img> element to ensure it works when already on a page with an <img>
+        var elmnt = iframe.contentWindow.document.getElementsByTagName("IMG")[0];
+        if (elmnt != undefined) {
+            elmnt.remove();
+        }
+        // Load new iframe page with Captue or Stream
+        document.getElementById('indexframe').setAttribute('src', Page);
+        // Apply CSS to rotate the Image
+        var checkExist = setInterval(function () {
+            var elmnt = iframe.contentWindow.document.getElementsByTagName("IMG")[0];
+            if (elmnt != undefined && elmnt.style != undefined) {
+                clearInterval(checkExist);
+                console.log("IMG there, go into a loop to set IMG else firefox won't work.");
+                var loopcnt = 0;
+                var checkStyle = setInterval(function () {
+                    var elmnt = iframe.contentWindow.document.getElementsByTagName("IMG")[0];
+                    clearInterval(checkExist);
+                    var ntransform = "";
+                    if ("%Rotation%" == "90")
+                        ntransform = "rotate(%Rotation%deg) translate(14%%, 15%%)";
+                    if ("%Rotation%" == "180")
+                        ntransform = "rotate(%Rotation%deg)";
+                    if ("%Rotation%" == "270")
+                        ntransform = "rotate(%Rotation%deg) translate(-12%%, -16%%)";
+                    // Check if Style is still correct 
+                    if (elmnt.style.transform != ntransform) {
+                        elmnt.style.transform = ntransform;
+                        console.log("CSS applied to IFRAME!");
+                        loopcnt = 0;
+                    } else {
+                        loopcnt++;
+                        console.log("loopcnt=" + loopcnt + "  " + elmnt.style.transform);
+                        if (loopcnt > 20) {
+                            clearInterval(checkStyle);
+                            console.log("Exit loop!");
+                        }
+                    }
+                }, 10);
+            } else {
+                console.log("IMG not there yet.");
+            }
+        }, 10);
+        console.log("Loop done.");
+    }
+</script>

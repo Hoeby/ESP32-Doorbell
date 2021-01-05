@@ -1,0 +1,298 @@
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<html>
+
+<head>
+    <title>%esp_name%</title>
+    <link href='css/main.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <h1>%esp_name% camera settings</h1>
+    <form name="camsetup" method="get" action="applycamsettings">
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <col width="150">
+                        <col width="200">
+                        <tr>
+                            <td>Framesize</td>
+                            <td><select id="framesize" name="framesize">
+                                    <option value="4">QVGA 320x240</option>
+                                    <option value="5">CIF 352x288</option>
+                                    <option value="6">VGA 640x480</option>
+                                    <option value="7">SVGA 800x600</option>
+                                    <option value="8">XGA 1024x768</option>
+                                    <option value="9">SXGA 1280x1024</option>
+                                    <option value="10">UXGA 1600x1200</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td>Brightness</td>
+                            <td><select id="brightness" name="brightness">
+                                    <option value="-2">-2</option>
+                                    <option value="-1">-1</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Contrast</td>
+                            <td><select id="contrast" name="contrast">
+                                    <option value="-2">-2</option>
+                                    <option value="-1">-1</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Saturation</td>
+                            <td><select id="saturation" name="saturation">
+                                    <option value="-2">-2</option>
+                                    <option value="-1">-1</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Special effect</td>
+                            <td><select id="special_effect" name="special_effect">
+                                    <option value="0">0 - No Effect</option>
+                                    <option value="1">1 - Negative</option>
+                                    <option value="2">2 - Grayscale</option>
+                                    <option value="3">3 - Red Tint,</option>
+                                    <option value="4">4 - Green Tint</option>
+                                    <option value="5">5 - Blue Tint</option>
+                                    <option value="6">6 - Sepia</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Whiteball</td>
+                            <td><select id="awb" name="awb">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Awb_gain</td>
+                            <td><select id="awb_gain" name="awb_gain">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Wb_mode</td>
+                            <td><select id="wb_mode" name="wb_mode">
+                                    <option value="0">0 - Auto</option>
+                                    <option value="1">1 - Sunny</option>
+                                    <option value="2">2 - Cloudy</option>
+                                    <option value="3">3 - Office</option>
+                                    <option value="4">4 - Home</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Exposure_ctrl</td>
+                            <td><select id="aec" name="aec">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+                        <tr>
+                            <td>Aec2</td>
+                            <td><select id="aec2" name="aec2">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Ae_level</td>
+                            <td><select id="ae_level" name="ae_level">
+                                    <option value="-2">-2</option>
+                                    <option value="-1">-1</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Aec_value</td>
+                            <td><select id="aec_value" name="aec_value">
+                                    <option value="0">0</option>
+                                    <option value="300">300</option>
+                                    <option value="600">600</option>
+                                    <option value="900">900</option>
+                                    <option value="1200">1200</option>
+                                </select></td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <col width="150">
+                        <col width="200">
+
+                        <tr>
+                            <td>Gain_ctrl</td>
+                            <td><select id="agc" name="agc">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Agc_gain</td>
+                            <td><select id="agc_gain" name="agc_gain">
+                                    <option value="0">0</option>
+                                    <option value="6">6</option>
+                                    <option value="12">12</option>
+                                    <option value="18">18</option>
+                                    <option value="24">24</option>
+                                    <option value="30">30</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Gainceiling</td>
+                            <td><select id="gainceiling" name="gainceiling">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Bpc</td>
+                            <td><select id="bpc" name="bpc">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Wpc</td>
+                            <td><select id="wpc" name="wpc">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Lenc</td>
+                            <td><select id="lenc" name="lenc">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Hmirror</td>
+                            <td><select id="hmirror" name="hmirror">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Vflip</td>
+                            <td><select id="vflip" name="vflip">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Dcw</td>
+                            <td><select id="dcw" name="dcw">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                        <tr>
+                            <td>Colorbar</td>
+                            <td><select id="colorbar" name="colorbar">
+                                    <option value="0">0 = disable</option>
+                                    <option value="1">1 = enable</option>
+                                </select></td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=2 align="center">
+                    <input type="submit" value="Apply&Save">&nbsp;&nbsp;&nbsp;
+                    <input type="button" style="font-size:14px; height:24px; width:90px"
+                        onClick="window.location.href='/configcamdump';" value="backup conf" />&nbsp;&nbsp;&nbsp;
+                    <input type="button" style="font-size:14px; height:24px; width:90px"
+                        onClick="window.location.href='/configupdrequest';" value="load config" />&nbsp;&nbsp;&nbsp;
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
+
+<script language="javascript" type="text/javascript">
+    // run update_vars to retrieve te config data from the ESP-Cam 
+    update_vars();
+    // retrieve the CAM SETTINGS data from the ESP-Cam and update WebPage with the current defaults
+    function update_vars() {
+        var configdata = $.ajax({
+            url: "/configcamcurrent",
+            dataType: "json",
+            type: 'GET',
+            cache: false,
+            async: true,
+            success: function (data) {
+                configdata = eval(data);
+                if (typeof (data.Error) != "undefined") {
+                    // need to do something with this when it fails 
+                    window.alert("Unable to retrieve the current CAM Setting, so the defaults are shown!");
+                    console.log('@ Received empty config... something is wrong');
+                    return;
+                }
+                for (var key in configdata) {
+                    configdata = eval(data);
+                    if (configdata.hasOwnProperty(key)) {
+                        console.log('@ search for: #' + key + " and set the default to->" + configdata[key]);
+                        // loop through the options for the #key to see which one needs to be set as "selected"
+                        if (document.getElementById(key) != null) {
+                            Array.from(document.querySelector("#" + key).options).forEach(function (option_element) {
+                                if (option_element.value == configdata[key]) {
+                                    // found it so set it as selected
+                                    console.log("--> found it! Change Selected for value->" + configdata[key]);
+                                    option_element.selected = 'selected';
+                                }
+                                console.log('Option Text=' + option_element.text +
+                                    ' Value=' + option_element.value +
+                                    ' Selected=' + (option_element.selected === true ? 'Yes' : 'No'));
+                            });
+                        }
+                    }
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                // Error getting configdump            
+            },
+        });
+    };
+
+</script>
