@@ -1,7 +1,7 @@
 # ESPCAM V2-Dev
 
 # Index:
-- <a href="assets/readme_first_file_upload/README_First_file_upload.md">First time; How to upload files to ESP (not finished)</a>
+- <a href="assets/readme_first_file_upload/README_First_file_upload.md">First time; How to upload files to ESP</a>
 - <a href="assets/readme_first_wifi_setup/README_First_wifi_setup.md">First time; First time wifi setup</a>
 - Camera setup (has to be made)
 - MQTT setup (has to be made)

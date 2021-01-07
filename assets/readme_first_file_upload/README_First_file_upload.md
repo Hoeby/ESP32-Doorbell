@@ -24,14 +24,13 @@ The firmware.bin file will be build. Check that the build finishes with a "succe
 
 <img src="03.png" width="1000" >
 
-5). Moet ik nog invullen, printscreen moet nog worden gemaakt.
+5). Connect the ESP32 to your PC and click on "Upload"
 
-6). Also select the "Build Filesystem Image" in the column.
-The spiffs.bin file will be build. Check that the build finishes with a "success"
+<img src="04.png" width="1000" >
 
-<img src="05.png" width="1000" >
+7). After a SUCCESS upload, click on "Upload Filesystem Image"
 
-7). Moet ik nog invullen, printscreen moet nog worden gemaakt.
-
+<img src="06.png" width="1000" >
 
 You are finished uploaden the files to the ESP-32-CAM or ESP-EYE.
+Go to the next step, "First time; First time wifi setup"
