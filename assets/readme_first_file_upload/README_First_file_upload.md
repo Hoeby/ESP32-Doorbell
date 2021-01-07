@@ -33,4 +33,4 @@ The firmware.bin file will be build. Check that the build finishes with a "succe
 <img src="06.png" width="1000" >
 
 You are finished uploaden the files to the ESP-32-CAM or ESP-EYE.
-Go to the next step, "First time; First time wifi setup"
+Go to the next step, <a href="assets/readme_first_file_upload/README_First_wifi_setup.md">First time; First time wifi setup</a>

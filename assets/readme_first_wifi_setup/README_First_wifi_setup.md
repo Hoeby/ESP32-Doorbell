@@ -1,8 +1,8 @@
 # ESPCAM V2
 
 # First time wifi setup
-When finishing the first upload to your esp-device. 
-Take your PC/smartphone to scan the wifi ssid's. In this example we have taken a smartphone.
+When you have finished the initial upload to your esp-device, you restart it in normal operation mode. 
+The first time the ESP is started, it will go into Wifi AP mode, so  take your PC/smartphone to scan the wifi ssid's. In this example we have taken a smartphone.
 
 1). Open the wifi menu on your device and search for "ESP Doorbell" and select it.
 
@@ -12,9 +12,8 @@ Take your PC/smartphone to scan the wifi ssid's. In this example we have taken a
 
 <img src="02.jpg" width="300" >
 
-3). When connected to the "ESP Doorbell" AP, open a webbrowser and go to http://192.168.4.1
-The wifi-manager will appear. Select "Configure WiFi", to use scan for a visible ssid.
-When your ssid is invisible, use the "Configure Wifi (No Scan)"
+3). When connected to the "ESP Doorbell" AP, you should get a prompt to “Wifi requires login”, click that to open a webbrowser. In case you don’t get a prompt you open de webbrowser and go to http://192.168.4.1.
+The wifi-manager will appear. Select "Configure WiFi", to use scan for a visible ssid. When your ssid is invisible, use the "Configure Wifi (No Scan)"
 
 <img src="03.jpg" width="300" >
 
