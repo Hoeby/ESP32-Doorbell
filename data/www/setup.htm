@@ -6,7 +6,7 @@
 </head>
 
 <body onload="SetFields()">
-    <h1>%esp_name% settings</h1>
+    <h1>%esp_name% settings</h1>  
     <form name="setup" method="get" action="savesettings">
         <table>
             <col width="200">
@@ -144,6 +144,16 @@
                     <input type="button" style="font-size:14px; height:24px; width:90px"
                         onClick="window.location.href='/configupdrequest';" value="load config" />&nbsp;&nbsp;
                 </td>
+            </tr>
+            <tr><td><br><br></td></tr>
+            <tr>
+                <td>Clear wifi credentails:</td>
+            </tr>
+            <tr>
+                <td>(be carefull to use)
+            </tr>
+            <tr>
+                <td><button type="button" onclick="window.location.href='/wificlear';">Clear wifi</button></td>    
             </tr>
         </table>
     </form>

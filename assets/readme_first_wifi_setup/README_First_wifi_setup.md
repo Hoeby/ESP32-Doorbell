@@ -1,4 +1,4 @@
-# ESPCAM V2-Dev
+# ESPCAM V2
 
 # First time wifi setup
 When finishing the first upload to your esp-device. 

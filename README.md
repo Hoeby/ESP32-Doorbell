@@ -1,4 +1,4 @@
-# ESPCAM V2-Dev
+# ESPCAM V2
 
 # Index:
 - <a href="assets/readme_first_file_upload/README_First_file_upload.md">First time; How to upload files to ESP</a>
@@ -63,19 +63,10 @@ Project CAM logic is based on:  <https://gist.github.com/me-no-dev/d34fba51a8f05
   - colorbar(s, 0);                    // 0 = disable , 1 = enable
 - Added rotation to setup options.
 
-TBD:
-
-- Onboard Wiki/Help pages
-- GitHub Wiki pages for:
-  - Installation
-  - Setup
-
-Optional:
+Road Map Optional:
 
 - Motion detection
-- Telegram, sending images when button pushed
-- cliënt ip filtering
 
-Excluded:
+Road Map Excluded:
 
-- Face detection. This is in conflict with AVG.
+- Face detection. This is in conflict with AVG(NL)/Privacy laws (EU).

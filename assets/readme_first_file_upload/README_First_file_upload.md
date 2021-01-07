@@ -1,4 +1,4 @@
-# ESPCAM V2-Dev
+# ESPCAM V2
 
 # First time files upload
 
@@ -28,7 +28,7 @@ The firmware.bin file will be build. Check that the build finishes with a "succe
 
 <img src="04.png" width="1000" >
 
-7). After a SUCCESS upload, click on "Upload Filesystem Image"
+6). After a SUCCESS upload, click on "Upload Filesystem Image"
 
 <img src="06.png" width="1000" >
 
