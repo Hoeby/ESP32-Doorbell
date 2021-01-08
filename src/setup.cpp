@@ -14,7 +14,7 @@
 #include "domoticz.h"
 //#include "camera_pins.h"
 #ifndef VERSION
-#define VERSION 0.0
+#define VERSION 2.0.0
 #endif
 
 // Define private used funcs
