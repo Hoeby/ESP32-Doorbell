@@ -5,6 +5,10 @@
 This instruction is based on using a FTDI device, to upload files to a ESP-32-CAM. The ESP-EYE is connected with a micro usb connector, this doesn't need the FTDI device.
 We don't get in details how to get the FTDI working on you PC, there is enough information online about drivers and how to.
 
+Prerequisite for this tutorial or use the available bin files and flash them using your prefered method:
+- Install Visual Studio Code: https://code.visualstudio.com/download
+- Install PlatformIO IDE Extension: https://platformio.org/install/ide?install=vscode
+
 1). Download the files from github and place them in a folder on you local machine
 
 2). Connect the ESP-32-CAM to the FTDI
