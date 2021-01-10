@@ -130,7 +130,7 @@ void setup() {
         ip.fromString(IPaddr);
         nm.fromString(SubNetMask);
         gw.fromString(GatewayAddr);
-        wifiManager.setSTAStaticIPConfig(ip, gw, nm);
+        wifiManager.setSTAStaticIPConfig(ip, gw, nm, gw);
     }
     // Try connecting to previous saved WiFI settings or else start as AP
     wifiManager.autoConnect(esp_name, esp_pass);
@@ -142,13 +142,15 @@ void setup() {
     const char *defaultTimezone = "CET-1CEST,M3.5.0/2,M10.5.0/3";
     configTzTime(defaultTimezone, NTPpool);  //sets TZ and starts NTP sync
     // wait max 5 secs till time is synced
-    AddLogMessageI("Wifi connected " + WiFi.SSID() + "  IP:" + WiFi.localIP().toString() + "  RSSI:" + String(WiFi.RSSI()) + "\n");
+    AddLogMessageI("Wifi connected " + WiFi.SSID() + "  IP:" + WiFi.localIP().toString() + "  GW:" + WiFi.gatewayIP().toString() + "  NM:" + WiFi.subnetMask().toString() + "  DNS:" + WiFi.dnsIP().toString() + "  RSSI:" + String(WiFi.RSSI()) + "\n");
     struct tm timeinfo;
     for (uint i = 0; i < 10; i++) {
-        if (getLocalTime(&timeinfo,500)) {
+        if (getLocalTime(&timeinfo, 500)) {
             AddLogMessageI(F("Time synced.\n"));
             break;
         }
+        if (i == 9)
+            AddLogMessageW(F("Time not synced yet.. Continuing startup.\n"));
     }
     // Init Camera
     initcamera();
