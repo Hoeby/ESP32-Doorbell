@@ -94,6 +94,7 @@ bool Restore_ESPConfig_from_SPIFFS() {
     GetJsonField("IPaddr", doc, IPaddr);
     GetJsonField("SubNetMask", doc, SubNetMask);
     GetJsonField("GatewayAddr", doc, GatewayAddr);
+    GetJsonField("DNSAddr", doc, DNSAddr);
     GetJsonField("SendProtocol", doc, SendProtocol);
     GetJsonField("ServerIP", doc, ServerIP);
     GetJsonField("ServerPort", doc, ServerPort);
@@ -122,6 +123,7 @@ void Save_NewESPConfig_to_SPIFFS(AsyncWebServerRequest *request) {
     p += sprintf(p, "\"IPaddr\":\"%s\",", urlDecode(request->arg("IPaddr")).c_str());
     p += sprintf(p, "\"SubNetMask\":\"%s\",", urlDecode(request->arg("SubNetMask")).c_str());
     p += sprintf(p, "\"GatewayAddr\":\"%s\",", urlDecode(request->arg("GatewayAddr")).c_str());
+    p += sprintf(p, "\"DNSAddr\":\"%s\",", urlDecode(request->arg("DNSAddr")).c_str());
     p += sprintf(p, "\"SendProtocol\":\"%s\",", urlDecode(request->arg("Send_Protocol")).c_str());
     p += sprintf(p, "\"ServerIP\":\"%s\",", urlDecode(request->arg("ServerIP")).c_str());
     p += sprintf(p, "\"ServerPort\":\"%s\",", urlDecode(request->arg("ServerPort")).c_str());
@@ -186,6 +188,8 @@ String TranslateTemplateVars(const String &var) {
         return SubNetMask;
     if (var == "GatewayAddr")
         return GatewayAddr;
+    if (var == "DNSAddr")
+        return DNSAddr;
     if (var == "SendProtocol")
         return SendProtocol;
     if (var == "ServerIP")

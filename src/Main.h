@@ -20,6 +20,7 @@ extern char IPsetting[6];
 extern char IPaddr[16];
 extern char SubNetMask[16];
 extern char GatewayAddr[16];
+extern char DNSAddr[16];
 extern char SendProtocol[5];
 extern char ServerIP[16];
 extern char ServerPort[5];
@@ -59,4 +60,3 @@ extern int ON_LED_STATE;
 
 //-------------------------------------------------------
 // Global Functions
-

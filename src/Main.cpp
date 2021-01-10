@@ -27,11 +27,10 @@ char esp_pass[20] = "espadmin";      //Bijbehorend wachtwoord voor SSID & Weblog
 //**                                                              IP settings device                                                              **
 //**************************************************************************************************************************************************
 char IPsetting[6] = "DHCP";             // DHCP/Fixed
-char IPaddr[16] = "192.168.0.0";        // IP adres
+char IPaddr[16] = "192.168.0.0";        // IP address
 char SubNetMask[16] = "255.255.255.0";  // subnet mask
-char GatewayAddr[16] = "192.168.0.1";   // Gateway adres
-//Als device geen internet nodig heeft, voer een fake gateway in.
-
+char GatewayAddr[16] = "192.168.0.1";   // Gateway address
+char DNSAddr[16] = "";                  // DNS address
 //**************************************************************************************************************************************************
 //**                                                          Setting Server credentials                                                         **
 //**************************************************************************************************************************************************
@@ -127,10 +126,18 @@ void setup() {
         IPAddress ip;
         IPAddress nm;
         IPAddress gw;
+        IPAddress dn;
         ip.fromString(IPaddr);
         nm.fromString(SubNetMask);
         gw.fromString(GatewayAddr);
-        wifiManager.setSTAStaticIPConfig(ip, gw, nm, gw);
+        if (!(strcmp(DNSAddr, "") == 0)) {
+            dn.fromString(DNSAddr);
+        }
+        else {
+            AddLogMessageI(F("DNS server not provided. Using Gateway IP as DNS.\n"));
+            dn = gw;
+        }
+        wifiManager.setSTAStaticIPConfig(ip, gw, nm, dn);
     }
     // Try connecting to previous saved WiFI settings or else start as AP
     wifiManager.autoConnect(esp_name, esp_pass);
