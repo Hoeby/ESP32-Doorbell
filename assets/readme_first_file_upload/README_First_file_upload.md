@@ -8,6 +8,7 @@ We don't get in details how to get the FTDI working on you PC, there is enough i
 Prerequisite for this tutorial or else use the available bin files and flash them using your prefered method:
 - Install Visual Studio Code: https://code.visualstudio.com/download
 - Install PlatformIO IDE Extension: https://platformio.org/install/ide?install=vscode
+- Install Git: https://git-scm.com/downloads
 
 1). Download the files from github and place them in a folder on you local machine
 
