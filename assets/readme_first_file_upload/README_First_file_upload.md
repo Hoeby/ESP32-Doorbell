@@ -16,23 +16,31 @@ Prerequisite for this tutorial or else use the available bin files and flash the
 <img src="01.png" width="300" >
 
 3). First build the files which are needed for an upload.
-- Open program "Visual Studio Code". 
-- Open "File" and select "Open Folder". 
+- Open program "Visual Studio Code".
+- Open "File" and select "Open Folder".
 - Select the folder where the files are extracted which downloaded from github.
 
 <img src="02.png" width="1000" >
 
-4). Go to the "platformIO" tab in the left column.
+4). Set the ESP32-Doorbeel.code-workspace.
+- Open "File" and select "Open Workspace".
+- Select the file "ESP32-Doorbell.code-workspace" and click "Open".
+
+<img src="02_01.png" width="1000" >
+
+<img src="02_02.png" width="1000" >
+
+5). Go to the "platformIO" tab in the left column.
 Open the menu and select "Build"
 The firmware.bin file will be build. Check that the build finishes with a "success"
 
 <img src="03.png" width="1000" >
 
-5). Connect the ESP32 to your PC and click on "Upload"
+6). Connect the ESP32 to your PC and click on "Upload"
 
 <img src="04.png" width="1000" >
 
-6). After a SUCCESS upload, click on "Upload Filesystem Image"
+7). After a SUCCESS upload, click on "Upload Filesystem Image"
 
 <img src="06.png" width="1000" >
 
