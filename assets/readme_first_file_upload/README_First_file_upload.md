@@ -41,7 +41,7 @@ The firmware.bin file will be build. Check that the build finishes with a "succe
 
 <img src="04.png" width="1000" >
 
-7). After a SUCCESS upload, click on "Upload Filesystem Image"
+7). After a SUCCESS upload, reboot the ESP32-CAM and then click on "Upload Filesystem Image"
 
 <img src="06.png" width="1000" >
 

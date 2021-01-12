@@ -28,6 +28,18 @@
                                 </select></td>
                         </tr>
                         <tr>
+                            <td>Quality</td>
+                            <td><select id="quality" name="quality">
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                </select></td>
+                        </tr>
+                        <tr>
                             <td>Brightness</td>
                             <td><select id="brightness" name="brightness">
                                     <option value="-2">-2</option>
@@ -126,6 +138,13 @@
                                 </select></td>
                         </tr>
 
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <col width="150">
+                        <col width="200">
+
                         <tr>
                             <td>Aec_value</td>
                             <td><select id="aec_value" name="aec_value">
@@ -136,12 +155,6 @@
                                     <option value="1200">1200</option>
                                 </select></td>
                         </tr>
-                    </table>
-                </td>
-                <td>
-                    <table>
-                        <col width="150">
-                        <col width="200">
 
                         <tr>
                             <td>Gain_ctrl</td>
@@ -251,7 +264,7 @@
 </html>
 
 <script language="javascript" type="text/javascript">
-    // run update_vars to retrieve te config data from the ESP-Cam 
+    // run update_vars to retrieve te config data from the ESP-Cam
     update_vars();
     // retrieve the CAM SETTINGS data from the ESP-Cam and update WebPage with the current defaults
     function update_vars() {
@@ -264,7 +277,7 @@
             success: function (data) {
                 configdata = eval(data);
                 if (typeof (data.Error) != "undefined") {
-                    // need to do something with this when it fails 
+                    // need to do something with this when it fails
                     window.alert("Unable to retrieve the current CAM Setting, so the defaults are shown!");
                     console.log('@ Received empty config... something is wrong');
                     return;
@@ -290,7 +303,7 @@
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                // Error getting configdump            
+                // Error getting configdump
             },
         });
     };

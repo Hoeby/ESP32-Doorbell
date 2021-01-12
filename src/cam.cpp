@@ -478,7 +478,7 @@ void Save_NewCAMConfig_to_SPIFFS(AsyncWebServerRequest *request) {
     char *p = json_response;
     *p++ = '{';
     p += sprintf(p, "\"framesize\":%u,", atoi(request->arg("framesize").c_str()));
-    //p += sprintf(p, "\"quality\":%u,", s->status.quality);
+    p += sprintf(p, "\"quality\":%u,", atoi(request->arg("quality").c_str()));
     p += sprintf(p, "\"brightness\":%d,", atoi(request->arg("brightness").c_str()));
     p += sprintf(p, "\"contrast\":%d,", atoi(request->arg("contrast").c_str()));
     p += sprintf(p, "\"saturation\":%d,", atoi(request->arg("saturation").c_str()));
@@ -539,7 +539,7 @@ bool Set_Cam_Settings_from_JSON(char *JSONCamSetting) {
     } else {
         //UINT
         GetJsonField_UpdateCam(s, doc, (char *)"framesize");
-        //GetJsonField_UpdateCam(s, doc, (char *)"quality");
+        GetJsonField_UpdateCam(s, doc, (char *)"quality");
         GetJsonField_UpdateCam(s, doc, (char *)"special_effect");
         GetJsonField_UpdateCam(s, doc, (char *)"wb_mode");
         GetJsonField_UpdateCam(s, doc, (char *)"awb");
