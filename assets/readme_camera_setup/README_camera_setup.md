@@ -42,11 +42,11 @@ There will be a notification: "upload complete"
 
 <img src="04.png" width="1000" >
 
-The view the image or stream, use these strings which are supported bu the ESP Doorbell:
+The view the image or stream, use these strings which are supported by the ESP Doorbell:
 
-      Camera JPG Capture
+Camera JPG Capture
 - http://192.168.xxx.xxx/capture
-      Camera JPG Stream
+Camera JPG Stream
 - http://192.168.xxx.xxx/stream
 
 When to button is pushed it is possible to send a command to third party systems.
@@ -55,4 +55,4 @@ For MQTT
 Go to the next step: <a href="../readme_mqtt_setup/README_mqtt_setup.md">mqtt setup</a>
 
 For HTTP/json
-Go to the next step: <a href="../readme_mqtt_setup/README_http_json_setup.md">http/json setup</a>
+Go to the next step: <a href="../readme_http_json_setup/README_http_json_setup.md">http/json setup</a>
