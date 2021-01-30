@@ -94,6 +94,10 @@
                 <td>Gateway Addr:</td>
                 <td><input name="GatewayAddr" maxlength="15" size="15" value="%GatewayAddr%"></td>
             </tr>
+            <tr id="DNSAddr">
+                <td>DNS IPAddress:</td>
+                <td><input name="DNSAddr" maxlength="15" size="15" value="%DNSAddr%"></td>
+            </tr>
             <tr>
                 <td>Send Protocol</td>
                 <td>
@@ -226,12 +230,14 @@
             document.getElementById('IPaddr').style.display = '';
             document.getElementById('SubNetMask').style.display = '';
             document.getElementById('GatewayAddr').style.display = '';
+            document.getElementById('DNSAddr').style.display = '';
         }
         else {
             document.getElementById('IPsetting').getElementsByTagName('option')[0].selected = 'selected';
             document.getElementById('IPaddr').style.display = 'none';
             document.getElementById('SubNetMask').style.display = 'none';
             document.getElementById('GatewayAddr').style.display = 'none';
+            document.getElementById('DNSAddr').style.display = 'none';
         }
 
         if (SendProtocol == "none") {
