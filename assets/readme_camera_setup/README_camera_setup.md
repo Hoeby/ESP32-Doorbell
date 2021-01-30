@@ -13,9 +13,13 @@ A notification, don't put the framesize to the maximum setting. This doesn't wor
 When you choose a bigger framesize, you could lower quality, to get the images transferred
 
 Some settings that worked in test-situation:
+
 SVGA 800x600, quality 10, working
+
 XGA 1024x768, quality 10, working
+
 XGA 1024x768, quality 15, working
+
 SXGA 1280x1024, quality 35, working
 
 When finished changing the settings, click on "Apply&Save"
