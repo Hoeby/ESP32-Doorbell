@@ -6,6 +6,8 @@ To setup MQTT for sending a command when button is pushed, go to "ESP Setting" m
 
 <img src="01.png" width="1000" >
 
+Choose at the function "Send Protocol" for "mqtt"
+
 The next setup lines will appear:
 - Server IP = the ip address of the mqtt server
 - Server Port = the port number for the mqtt server
