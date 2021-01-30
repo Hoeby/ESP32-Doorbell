@@ -56,3 +56,7 @@ Do a double check if the correct board is selected and "Save" the config.
 11). The "ESP Doorbell" will come back on the "ESP Info" page. 
 
 <img src="11.png" width="1000" >
+
+You are finished setting up Wifi to the ESP-32-CAM or ESP-EYE.
+
+Go to the next step: <a href="../readme_camera_setup/README_camera_setup.md">Camera setup</a>
