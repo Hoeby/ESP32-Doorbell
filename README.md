@@ -3,9 +3,9 @@
 # Index:
 - <a href="assets/readme_first_file_upload/README_First_file_upload.md">First time; How to upload files to ESP</a>
 - <a href="assets/readme_first_wifi_setup/README_First_wifi_setup.md">First time; First time wifi setup</a>
-- Camera setup (has to be made)
-- MQTT setup (has to be made)
-- HTTP setup (has to be made)
+- <a href="assets/readme_camera_setup/README_camera_setup.md">Camera setup</a> 
+- <a href="assets/readme_mqtt_setup/README_mqtt_setup.md">MQTT setup</a> 
+- <a href="assets/readme_http_json_setup/README_http_json_setup.md">HTTP/JSON setup</a> 
 - Upload new firmware (has to be made)
 - Download config (has to be made)
 - Download logfile (has to be made)
