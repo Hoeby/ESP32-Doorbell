@@ -94,10 +94,6 @@
                 <td>Gateway Addr:</td>
                 <td><input name="GatewayAddr" maxlength="15" size="15" value="%GatewayAddr%"></td>
             </tr>
-            <tr id="DNSAddr">
-                <td>DNS IPAddress:</td>
-                <td><input name="DNSAddr" maxlength="15" size="15" value="%DNSAddr%"></td>
-            </tr>
             <tr>
                 <td>Send Protocol</td>
                 <td>
@@ -230,14 +226,12 @@
             document.getElementById('IPaddr').style.display = '';
             document.getElementById('SubNetMask').style.display = '';
             document.getElementById('GatewayAddr').style.display = '';
-            document.getElementById('DNSAddr').style.display = '';
         }
         else {
             document.getElementById('IPsetting').getElementsByTagName('option')[0].selected = 'selected';
             document.getElementById('IPaddr').style.display = 'none';
             document.getElementById('SubNetMask').style.display = 'none';
             document.getElementById('GatewayAddr').style.display = 'none';
-            document.getElementById('DNSAddr').style.display = 'none';
         }
 
         if (SendProtocol == "none") {
@@ -254,7 +248,8 @@
             document.getElementById('Send_Protocol').getElementsByTagName('option')[1].selected = 'selected';
             document.getElementById('server1').style.display = '';
             document.getElementById('server2').style.display = '';
-            document.forms['setup']['ServerPort'].value = '8080';
+            if (document.forms['setup']['ServerPort'].value == '')
+                document.forms['setup']['ServerPort'].value = '8080';
             document.getElementById('server3').style.display = '';
             document.getElementById('server4').style.display = '';
             document.getElementById('server5').style.display = '';
@@ -265,7 +260,8 @@
             document.getElementById('Send_Protocol').getElementsByTagName('option')[2].selected = 'selected';
             document.getElementById('server1').style.display = '';
             document.getElementById('server2').style.display = '';
-            document.forms['setup']['ServerPort'].value = '1883';
+            if (document.forms['setup']['ServerPort'].value == '')
+                document.forms['setup']['ServerPort'].value = '1883';
             document.getElementById('server3').style.display = '';
             document.getElementById('server4').style.display = '';
             document.getElementById('server5').style.display = '';
