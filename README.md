@@ -1,7 +1,5 @@
 # ESPCAM V2
 
-test
-
 # Index:
 - <a href="assets/readme_first_file_upload/README_First_file_upload.md">First time; How to upload files to ESP</a>
 - <a href="assets/readme_first_wifi_setup/README_First_wifi_setup.md">First time; First time wifi setup</a>
