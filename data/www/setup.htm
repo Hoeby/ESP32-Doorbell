@@ -136,6 +136,23 @@
                 <td>MQTT TopicIn:</td>
                 <td><input name="MQTTtopicin" maxlength="20" size="20" value="%MQTTtopicin%"></td>
             </tr>
+            <tr id="motion0">
+                <td>Motion input active</td>
+                <td>
+                    <select id="Motion" name="Motion" onchange="ChangeMotion()">
+                        <option value="no">no</option>
+                        <option value="yes">yes</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="motion1">
+                <td>&nbsp;&nbsp;Motion IDX:</td>
+                <td><input name="MotionIDX" maxlength="5" size="5" value="%MotionIDX%"></td>
+            </tr>
+            <tr id="motion2">
+                <td>&nbsp;&nbsp;Motion disable:</td>
+                <td><input name="MotionDisable" maxlength="5" size="5" value="%MotionDisable%"> msec</td>
+            </tr>
             <tr>
                 <td colspan=2 id="message">
                 </td>
@@ -172,6 +189,7 @@
     var esp_board = "%esp_board%";
     var IPsetting = "%IPsetting%";
     var SendProtocol = "%SendProtocol%";
+    var Motion = "%Motion%";
     var Rotation = "%Rotation%";
 
     function ChangeIP() {
@@ -185,6 +203,11 @@
     }
     function ChangeProtocol() {
         SendProtocol = document.getElementById('Send_Protocol').value;
+        SetFields();
+    }
+    
+    function ChangeMotion() {
+        Motion = document.getElementById('Motion').value;
         SetFields();
     }
 
@@ -251,6 +274,7 @@
             document.getElementById('server5').style.display = 'none';
             document.getElementById('mqtt1').style.display = 'none';
             document.getElementById('mqtt2').style.display = 'none';
+            document.getElementById('motion0').style.display = 'none';
         }
         else if (SendProtocol == "json") {
             document.getElementById('Send_Protocol').getElementsByTagName('option')[1].selected = 'selected';
@@ -263,6 +287,10 @@
             document.getElementById('server5').style.display = '';
             document.getElementById('mqtt1').style.display = 'none';
             document.getElementById('mqtt2').style.display = 'none';
+            if (esp_board == "AI_THINKER") 
+                document.getElementById('motion0').style.display = '';
+            else if (esp_board == "ESP_EYE")
+                document.getElementById('motion0').style.display = 'none';
         }
         else if (SendProtocol == "mqtt") {
             document.getElementById('Send_Protocol').getElementsByTagName('option')[2].selected = 'selected';
@@ -275,6 +303,21 @@
             document.getElementById('server5').style.display = '';
             document.getElementById('mqtt1').style.display = '';
             document.getElementById('mqtt2').style.display = '';
+            if (esp_board == "AI_THINKER") 
+                document.getElementById('motion0').style.display = '';
+            else if (esp_board == "ESP_EYE")
+                document.getElementById('motion0').style.display = 'none';
+        }
+
+        if (Motion == "no") {
+            document.getElementById('Motion').getElementsByTagName('option')[0].selected = 'selected';
+            document.getElementById('motion1').style.display = 'none';
+            document.getElementById('motion2').style.display = 'none';
+        }
+        else if (Motion == "yes") {
+            document.getElementById('Motion').getElementsByTagName('option')[1].selected = 'selected';
+            document.getElementById('motion1').style.display = '';
+            document.getElementById('motion2').style.display = '';
         }
     }
 </script>

@@ -20,6 +20,10 @@ bool ButtonProcessActive = false;  //Button pressed process started
 int ledState = ON_LED_STATE;       //the current state of LED High/Low
 bool ledon_bydefault = true;       //is the default state for the LED ON? True/False
 
+uint MotionDisable_done = 0;       //How long is motion disabled
+long Motion_timer = 0;              //Motion timer
+bool MotionProcessActive = false;  //Motion Active process started
+
 //-4 : MQTT_CONNECTION_TIMEOUT - the server didn't respond within the keepalive time
 //-3 : MQTT_CONNECTION_LOST - the network connection was broken
 //-2 : MQTT_CONNECT_FAILED - the network connection failed
@@ -153,7 +157,7 @@ void Button_Check() {
 
 // Function to process when button is pressed
 void Button_Pressed(const char *State) {
-    AddLogMessageI("Button :" + String(State) + "\n");
+    AddLogMessageI("Button: " + String(State) + "\n");
     if (!strcmp(SendProtocol, "json")) {
         Domoticz_JSON_Switch(State);
     } else if (!strcmp(SendProtocol, "mqtt")) {
@@ -261,3 +265,105 @@ void SetLedtoDefault(bool warn) {
         }
     }
 }
+
+// Check the motion state and process the switch action
+void Motion_Check() {
+    // Check if motion is activated
+    if (digitalRead(MOTION_GPIO_NUM) == MotionActiveState && !MotionProcessActive) {
+        MotionProcessActive = true;
+        MotionDisable_done = 1;
+        Motion_Active("On");
+        return;
+    }
+    // perform and switch Off
+    if (MotionProcessActive) {
+        if (MotionDisable_done > (MotionDisable / 10)) {
+            AddLogMessageI(" Done.\n");
+            Motion_Active("Off");
+            MotionProcessActive = false;
+        } else {
+            if ((MotionDisable / 1000) < millis()) {
+                Motion_timer = millis();
+                MotionDisable_done++;
+            }
+        }
+    }
+}
+
+// Function to process when motion is active
+void Motion_Active(const char *State) {
+    AddLogMessageI("Motion: " + String(State) + "\n");
+    if (!strcmp(SendProtocol, "json")) {
+        Domoticz_JSON_Motion_Switch(State);
+    } else if (!strcmp(SendProtocol, "mqtt")) {
+        Domoticz_MQTT_Motion_Switch(State);
+    } else {
+        AddLogMessageW(F("SendProtocol = \"none\", No command to send\n"));
+    }
+}
+
+// function to switch domoticz switch on/off
+bool Domoticz_JSON_Motion_Switch(const char *State) {
+    client.stop();  // Clear any current connections
+    bool respok = true;
+    if (!client.connect(ServerIP, atoi(ServerPort))) {
+        AddLogMessageE(F("Domoticz JSON Motion Connection failed\n"));
+        return false;
+    }
+    // Set UserVarible to motion active
+    String url = F("/json.htm?type=command&param=switchlight&idx=");
+    url += String(MotionIDX);
+    url += F("&switchcmd=");
+    url += State;
+    client.print(F("GET "));
+    client.print(url);
+    // add header
+    client.print(F(" HTTP/1.1\r\n"));
+    // Add Authentication to the HTTP header when USER or Password is defined
+    if (!(strcmp(ServerUser, "") == 0) || !(strcmp(ServerPass, "") == 0)) {
+        String auth = base64::encode(String(ServerUser) + ":" + String(ServerPass));
+        AddLogMessageI("  -> Use basic Authentication: " + auth + "\n");
+        client.printf("Authorization: Basic %s\r\n", auth.c_str());
+    }
+    client.print(F("\r\n\r\n Connection: close\r\n\r\n"));
+    unsigned long timeout = millis();
+    AddLogMessageD("Domoticz URL " + url + "\n");
+    while (client.available() == 0) {
+        if (millis() - timeout > 2000) {
+            AddLogMessageE(F("Domoticz JSON Motion Connection timeout\n"));
+            client.stop();
+            return false;
+        }
+    }
+    String response = client.readString();
+    if ((response.indexOf("200 OK") > 0) && (response.indexOf("\"ERR\"") < 0)) {
+        AddLogMessageI(F("Domoticz Switch Motion command send\n"));
+        respok = true;
+    } else {
+        AddLogMessageE("Domoticz Switch Motion command failed:" + response + "\n");
+        respok = false;
+    }
+    client.stop();
+    return respok;
+}
+
+bool Domoticz_MQTT_Motion_Switch(const char *State) {
+    String MqttMessage = F("{\"command\": \"switchlight\", \"idx\": ");
+    MqttMessage += String(MotionIDX);
+    MqttMessage += F(", \"switchcmd\": \"");
+    MqttMessage += State;
+    MqttMessage += F("\"}");
+    if (Mqtt_Connect()) {
+        String msg = F("mqtt publish t= ");
+        msg += MQTTtopicin;
+        msg += F(" m=");
+        msg += MqttMessage;
+        msg += F("\n");
+        AddLogMessageI(msg);
+        MqttClient.publish(MQTTtopicin, ((char *)MqttMessage.c_str()));
+        return true;
+    } else {
+        AddLogMessageE(F("Mqtt not connected so Switch motion message not send!\n"));
+        return false;
+    }
+} 

@@ -42,6 +42,9 @@ char ServerPass[16] = "";                    //MQTT password
 char DomoticzIDX[5] = "999";                 //Domoticz IDX nummer welke geschakeld moet worden.
 char MQTTsubscriber[20] = "ESP32CAM/Input";  //MQTT MQTTsubscriber name
 char MQTTtopicin[20] = "domoticz/in";        //MQTT Topic name
+char Motion[4] = "no";                       //Define use motion input
+char MotionIDX[5] = "";                      //Domoticz Motion IDX
+uint MotionDisable = 20000;                  //Disable motion detection in sec
 
 //**************************************************************************************************************************************************
 //**                                                              Setting PUSH button                                                             **
@@ -73,6 +76,7 @@ int HREF_GPIO_NUM = 0;
 int PCLK_GPIO_NUM = 0;
 int BUTTON_GPIO_NUM = 12;     // Set the BUTTON GPIO pin
 int BUTTONLED_GPIO_NUM = 13;  // Set the LED GPIO pin
+int MOTION_GPIO_NUM = 14;     // Set the MOTION GPIO pin
 int ON_LED_STATE = HIGH;      // Set the default State of the LED GPIO pin
 
 //**************************************************************************************************************************************************
@@ -92,6 +96,13 @@ ssdpAWS mySSDP(&webserver);
 const int buttonPushedState = BUTTOM_PUSH_STATE;
 #else
 const int buttonPushedState = HIGH;
+#endif
+
+// Define whether the pushbutton changes to LOW or HIGH when pushed
+#if defined(MOTION_ACTIVE_STATE)
+const int MotionActiveState = BUTTOM_PUSH_STATE;
+#else
+const int MotionActiveState = HIGH;
 #endif
 
 unsigned long MQTT_lasttime;  // MQTT check lasttime
@@ -164,6 +175,8 @@ void setup() {
 
     // Set Button GPIO for INPUT and PULL UP/DOWN depending of the definition
     pinMode(BUTTON_GPIO_NUM, (buttonPushedState ? INPUT_PULLDOWN : INPUT_PULLUP));
+    // Set Button GPIO for INPUT and PULL UP/DOWN depending of the definition
+    pinMode(MOTION_GPIO_NUM, (MotionActiveState ? INPUT_PULLDOWN : INPUT_PULLUP));
     // Set LED output and optional the same flashes for the defined LED_BUILTIN
     pinMode(BUTTONLED_GPIO_NUM, OUTPUT);
     digitalWrite(BUTTONLED_GPIO_NUM, ON_LED_STATE);
@@ -203,6 +216,7 @@ void loop() {
 
     // Check button or open actions for it
     Button_Check();
+    Motion_Check();
 
     // Flash LED when WiFi is lost
     if (!WiFi.isConnected()) {

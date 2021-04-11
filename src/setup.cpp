@@ -101,6 +101,9 @@ bool Restore_ESPConfig_from_SPIFFS() {
     GetJsonField("ServerUser", doc, ServerUser);
     GetJsonField("ServerPass", doc, ServerPass);
     GetJsonField("DomoticzIDX", doc, DomoticzIDX);
+    GetJsonField("Motion", doc, Motion);
+    GetJsonField("MotionIDX", doc, MotionIDX); 
+    GetJsonField("MotionDisable", doc, &MotionDisable);
     GetJsonField("MQTTsubscriber", doc, MQTTsubscriber);
     GetJsonField("MQTTtopicin", doc, MQTTtopicin);
     GetJsonField("Flashcount", doc, &Flashcount);
@@ -130,6 +133,9 @@ void Save_NewESPConfig_to_SPIFFS(AsyncWebServerRequest *request) {
     p += sprintf(p, "\"ServerUser\":\"%s\",", urlDecode(request->arg("ServerUser")).c_str());
     p += sprintf(p, "\"ServerPass\":\"%s\",", urlDecode(request->arg("ServerPass")).c_str());
     p += sprintf(p, "\"DomoticzIDX\":\"%s\",", urlDecode(request->arg("DomoticzIDX")).c_str());
+    p += sprintf(p, "\"Motion\":\"%s\",", urlDecode(request->arg("Motion")).c_str());
+    p += sprintf(p, "\"MotionIDX\":\"%s\",", urlDecode(request->arg("MotionIDX")).c_str());
+    p += sprintf(p, "\"MotionDisable\":\"%s\",", urlDecode(request->arg("MotionDisable")).c_str());
     p += sprintf(p, "\"MQTTsubscriber\":\"%s\",", urlDecode(request->arg("MQTTsubscriber")).c_str());
     p += sprintf(p, "\"MQTTtopicin\":\"%s\",", urlDecode(request->arg("MQTTtopicin")).c_str());
     p += sprintf(p, "\"Flashcount\":\"%s\",", urlDecode(request->arg("Flashcount")).c_str());
@@ -170,6 +176,8 @@ String TranslateTemplateVars(const String &var) {
         return String(BUTTON_GPIO_NUM);
     if (var == "BUTTONLED_GPIO_NUM")
         return String(BUTTONLED_GPIO_NUM);
+    if (var == "MOTION_GPIO_NUM")
+        return String(MOTION_GPIO_NUM);
     if (var == "webloglevel")
         return String(webloglevel);
     if (var == "esp_board")
@@ -202,6 +210,12 @@ String TranslateTemplateVars(const String &var) {
         return ServerPass;
     if (var == "DomoticzIDX")
         return DomoticzIDX;
+    if (var == "Motion")
+        return Motion;
+    if (var == "MotionIDX")
+        return MotionIDX;
+    if (var == "MotionDisable")
+        return String(MotionDisable);
     if (var == "MQTTsubscriber")
         return MQTTsubscriber;
     if (var == "MQTTtopicin")

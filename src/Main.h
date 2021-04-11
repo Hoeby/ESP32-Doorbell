@@ -30,6 +30,10 @@ extern char DomoticzIDX[5];
 extern char MQTTsubscriber[20];
 extern char MQTTtopicin[20];
 extern const int buttonPushedState;
+extern char Motion[4];
+extern const int MotionActiveState;
+extern char MotionIDX[5];
+extern uint MotionDisable;
 extern uint Flashcount;
 extern uint Flashduration;
 extern char Rotation[4];
@@ -56,6 +60,7 @@ extern int HREF_GPIO_NUM;
 extern int PCLK_GPIO_NUM;
 extern int BUTTON_GPIO_NUM;
 extern int BUTTONLED_GPIO_NUM;
+extern int MOTION_GPIO_NUM;
 extern int ON_LED_STATE;
 
 //-------------------------------------------------------
