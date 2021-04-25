@@ -278,7 +278,7 @@ void Motion_Check() {
     // perform and switch Off
     if (MotionProcessActive) {
         if (MotionDisable_done > (MotionDisable / 10)) {
-            AddLogMessageI(" Done.\n");
+            AddLogMessageD("Motion timer done.\n");
             Motion_Active("Off");
             MotionProcessActive = false;
         } else {
