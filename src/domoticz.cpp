@@ -159,16 +159,16 @@ void Button_Check() {
 void Button_Pressed(const char *State) {
     AddLogMessageI("Button: " + String(State) + "\n");
     if (!strcmp(SendProtocol, "json")) {
-        Domoticz_JSON_Switch(State);
+        Domoticz_JSON_Switch(DomoticzIDX, State);
     } else if (!strcmp(SendProtocol, "mqtt")) {
-        Domoticz_MQTT_Switch(State);
+        Domoticz_MQTT_Switch(DomoticzIDX, State);
     } else {
         AddLogMessageW(F("SendProtocol = \"none\", No command to send\n"));
     }
 }
 
 // function to switch domoticz switch on/off
-bool Domoticz_JSON_Switch(const char *State) {
+bool Domoticz_JSON_Switch(const char *Idx, const char *State) {
     client.stop();  // Clear any current connections
     bool respok = true;
     if (!client.connect(ServerIP, atoi(ServerPort))) {
@@ -177,7 +177,7 @@ bool Domoticz_JSON_Switch(const char *State) {
     }
     // Set UserVarible to button pressed
     String url = F("/json.htm?type=command&param=switchlight&idx=");
-    url += String(DomoticzIDX);
+    url += String(Idx);
     url += F("&switchcmd=");
     url += State;
     client.print(F("GET "));
@@ -212,9 +212,9 @@ bool Domoticz_JSON_Switch(const char *State) {
     return respok;
 }
 
-bool Domoticz_MQTT_Switch(const char *State) {
+bool Domoticz_MQTT_Switch(const char *Idx, const char *State) {
     String MqttMessage = F("{\"command\": \"switchlight\", \"idx\": ");
-    MqttMessage += String(DomoticzIDX);
+    MqttMessage += String(Idx);
     MqttMessage += F(", \"switchcmd\": \"");
     MqttMessage += State;
     MqttMessage += F("\"}");
@@ -294,76 +294,10 @@ void Motion_Check() {
 void Motion_Active(const char *State) {
     AddLogMessageI("Motion: " + String(State) + "\n");
     if (!strcmp(SendProtocol, "json")) {
-        Domoticz_JSON_Motion_Switch(State);
+        Domoticz_JSON_Switch(MotionIDX, State);
     } else if (!strcmp(SendProtocol, "mqtt")) {
-        Domoticz_MQTT_Motion_Switch(State);
+        Domoticz_MQTT_Switch(MotionIDX, State);
     } else {
         AddLogMessageW(F("SendProtocol = \"none\", No command to send\n"));
     }
 }
-
-// function to switch domoticz switch on/off
-bool Domoticz_JSON_Motion_Switch(const char *State) {
-    client.stop();  // Clear any current connections
-    bool respok = true;
-    if (!client.connect(ServerIP, atoi(ServerPort))) {
-        AddLogMessageE(F("Domoticz JSON Motion Connection failed\n"));
-        return false;
-    }
-    // Set UserVarible to motion active
-    String url = F("/json.htm?type=command&param=switchlight&idx=");
-    url += String(MotionIDX);
-    url += F("&switchcmd=");
-    url += State;
-    client.print(F("GET "));
-    client.print(url);
-    // add header
-    client.print(F(" HTTP/1.1\r\n"));
-    // Add Authentication to the HTTP header when USER or Password is defined
-    if (!(strcmp(ServerUser, "") == 0) || !(strcmp(ServerPass, "") == 0)) {
-        String auth = base64::encode(String(ServerUser) + ":" + String(ServerPass));
-        AddLogMessageI("  -> Use basic Authentication: " + auth + "\n");
-        client.printf("Authorization: Basic %s\r\n", auth.c_str());
-    }
-    client.print(F("\r\n\r\n Connection: close\r\n\r\n"));
-    unsigned long timeout = millis();
-    AddLogMessageD("Domoticz URL " + url + "\n");
-    while (client.available() == 0) {
-        if (millis() - timeout > 2000) {
-            AddLogMessageE(F("Domoticz JSON Motion Connection timeout\n"));
-            client.stop();
-            return false;
-        }
-    }
-    String response = client.readString();
-    if ((response.indexOf("200 OK") > 0) && (response.indexOf("\"ERR\"") < 0)) {
-        AddLogMessageI(F("Domoticz Switch Motion command send\n"));
-        respok = true;
-    } else {
-        AddLogMessageE("Domoticz Switch Motion command failed:" + response + "\n");
-        respok = false;
-    }
-    client.stop();
-    return respok;
-}
-
-bool Domoticz_MQTT_Motion_Switch(const char *State) {
-    String MqttMessage = F("{\"command\": \"switchlight\", \"idx\": ");
-    MqttMessage += String(MotionIDX);
-    MqttMessage += F(", \"switchcmd\": \"");
-    MqttMessage += State;
-    MqttMessage += F("\"}");
-    if (Mqtt_Connect()) {
-        String msg = F("mqtt publish t= ");
-        msg += MQTTtopicin;
-        msg += F(" m=");
-        msg += MqttMessage;
-        msg += F("\n");
-        AddLogMessageI(msg);
-        MqttClient.publish(MQTTtopicin, ((char *)MqttMessage.c_str()));
-        return true;
-    } else {
-        AddLogMessageE(F("Mqtt not connected so Switch motion message not send!\n"));
-        return false;
-    }
-} 
