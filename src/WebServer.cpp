@@ -178,6 +178,11 @@ void ESPShowPagewithTemplate(AsyncWebServerRequest *request) {
 
     if (page == "/" || page == "/index.html") {
         page = "/www/index.htm";
+    } else if (page == "//capture" || page == "//capture.htm") {
+        msg += "\" -> ";
+        AddLogMessageI(msg);
+        sendJpg(request);
+        return;
     } else if (page == "/wificlear") {
         String msg = F("Webrequest: \"ESP wifi clearing\"\n");
         AddLogMessageI(msg);
